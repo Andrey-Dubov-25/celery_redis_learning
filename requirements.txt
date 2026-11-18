@@ -1,1 +1,2 @@
 celery[redis]==5.7.0
+gevent==26.9.0
