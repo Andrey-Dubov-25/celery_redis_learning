@@ -1,5 +1,6 @@
 import time
 import random
+from datetime import datetime
 
 from celery_app import app
 
@@ -72,3 +73,24 @@ def aggregate(results: list) -> dict:
         'items': results,
         'status': 'all_ok'
     }
+
+@app.task
+def cleanup_temp_files() -> str:
+    print(f'--- [BEAT] cleanup_temp_files в {datetime.now().isoformat()} ---')
+    return 'cleanup done'
+
+@app.task
+def generate_daily_report() -> str:
+    print(
+        f'--- [BEAT] generate_daily_report в {datetime.now().isoformat()} ---'
+    )
+    return 'Daily report generated'
+
+@app.task
+def ping_external_service(url: str) -> str:
+    print(
+        f'--- [BEAT] ping_external_service({url}) в {
+            datetime.now().isoformat()
+        } ---'
+    )
+    return f'Pinged {url}'
