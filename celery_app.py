@@ -1,11 +1,16 @@
+import os
+
 from celery import Celery
 from celery.schedules import crontab
 
 
+BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379/0')
+RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://localhost:6379/1')
+
 app = Celery(
     'my_learning_app',
-    broker='redis://localhost:6379/0',
-    backend='redis://localhost:6379/1',
+    broker=BROKER_URL,
+    backend=RESULT_BACKEND,
     include=['tasks']
 )
 
